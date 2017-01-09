@@ -12,6 +12,14 @@ var requester = zmq.socket('req');
 
 requester.connect("tcp://localhost:5556");
 
+responder.bind('tcp://*:5555', function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Listening on 5555…");
+  }
+});
+
 app.on('ready', function() {
 
    var prefsWindow = new BrowserWindow({
@@ -37,15 +45,22 @@ app.on('ready', function() {
         prefsWindow.show();
    });
 
-   globalShortcut.register('Up', function () {
-         console.log("Pressed Up");
-        prefsWindow.webContents.send("update-value","Up");
-   });
+   prefsWindow.on('focus',function(){
+     globalShortcut.register('Up', function () {
+           console.log("Pressed Up");
+          prefsWindow.webContents.send("update-value","Up");
+     });
 
-   globalShortcut.register('Down', function () {
-     console.log("Pressed Down");
-        prefsWindow.webContents.send("update-value","Down");
-   });
+     globalShortcut.register('Down', function () {
+       console.log("Pressed Down");
+          prefsWindow.webContents.send("update-value","Down");
+     });
+   })
+
+   prefsWindow.on('blur',function(){
+     globalShortcut.unregister("Up")
+     globalShortcut.unregister("Down")
+   })
 
    ipc.on('toggle-window', function (event) {
       if (prefsWindow.isVisible())
@@ -53,6 +68,17 @@ app.on('ready', function() {
       else
         prefsWindow.show()
    })
+
+   ipc.on("update-done", function(arg){
+     console.log("Preferences update done")
+     responder.send("done")
+   })
+
+   responder.on('message', function(request) {
+     console.log("Received request: [", request.toString(), "]");
+
+     prefsWindow.webContents.send("update-value",request);
+   });
 })
 
 process.on('SIGINT', function() {

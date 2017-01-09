@@ -7,17 +7,24 @@ function prepareTab(tab, val) {
 }
 
 function showTabContent(id) {
-  activeTab = document.getElementsByClassName('.tab-item active');
+  //activeTab = document.getElementsByClassName('.tab-item active');
+   console.log(id);
+}
 
+function updateValue(arg) {
+  if (arg === "Up") {
+    console.log("Increasing value");
+  } else
+
+  if (arg === "Down") {
+    console.log("Decreasing value")
+  } else
+  console.log(arg)
+
+  ipcRenderer.send("update-done","done")     
 }
 
 ipcRenderer.on('update-value',(event, arg) => {
-    // Print 5
     console.log(arg);
+    updateValue(arg);
 });
-
-var activetab = document.querySelectorAll('.tab-group');
-
-console.log(activetab);
-
-prepareTab(activetab, activetab.querySelector('.icon*'));
