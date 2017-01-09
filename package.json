@@ -1,5 +1,5 @@
 {
-   "name": "electron-ipc",
+   "name": "electron_UI",
    "version": "0.1.0",
    "description":"",
    "main": "app.js",
@@ -7,6 +7,6 @@
       "start": "electron ."
    },
    "devDependencies":{
-     "electron": "^1.4.13" 
+     "electron": "^1.4.13"
    }
 }

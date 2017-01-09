@@ -1,27 +1,18 @@
 const electron = require('electron')
-
 const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const MenuItem = electron.MenuItem
 const ipc = electron.ipcMain
 const app = electron.app
 const globalShortcut = electron.globalShortcut
+const zmq = require('zeromq')
 
-const menu = new Menu()
-menu.append(new MenuItem({ label: 'Hello' }))
-menu.append(new MenuItem({ type: 'separator' }))
-menu.append(new MenuItem({ label: 'Electron', type: 'checkbox', checked: true }))
+var responder = zmq.socket('rep');
+var requester = zmq.socket('req');
+
+requester.connect("tcp://localhost:5556");
 
 app.on('ready', function() {
-   var mainWindow = new BrowserWindow({
-       width: 800,
-       height: 600,
-       show : false
-   })
-
-   mainWindow.loadURL('file://' + __dirname + '/main.html')
-
-
 
    var prefsWindow = new BrowserWindow({
        width  : 400,
@@ -34,27 +25,36 @@ app.on('ready', function() {
 
    prefsWindow.loadURL('file://'+__dirname + '/prefs.html')
 
-
    globalShortcut.register('Tab', function () {
       prefsWindow.toggleDevTools();
    });
 
    globalShortcut.register('Esc', function () {
-     console.log("Esc hit");
+     console.log("Pref toggle hit");
       if (prefsWindow.isVisible())
         prefsWindow.hide();
       else
         prefsWindow.show();
    });
 
+   globalShortcut.register('Up', function () {
+         console.log("Pressed Up");
+        prefsWindow.webContents.send("update-value","Up");
+   });
+
+   globalShortcut.register('Down', function () {
+     console.log("Pressed Down");
+        prefsWindow.webContents.send("update-value","Down");
+   });
 
    ipc.on('toggle-window', function (event) {
-      console.log("clicked me")
-
-
       if (prefsWindow.isVisible())
         prefsWindow.hide()
       else
         prefsWindow.show()
    })
 })
+
+process.on('SIGINT', function() {
+  requester.close();
+});
