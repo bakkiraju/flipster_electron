@@ -12,16 +12,25 @@ function showTabContent(id) {
 }
 
 function updateValue(arg) {
+
+  var elem = document.getElementById('active_tab_content')
+
+  var val = parseInt(elem.innerHTML);
+
   if (arg === "Up") {
     console.log("Increasing value");
-  } else
-
-  if (arg === "Down") {
+    val = val + 1
+  } else if (arg === "Down") {
     console.log("Decreasing value")
-  } else
-  console.log(arg)
+    val = val - 1
+  } else {
+    val = arg;
+    console.log("Updated via external message:",val)
+  }
 
-  ipcRenderer.send("update-done","done")     
+  elem.innerHTML = val.toString();
+
+  ipcRenderer.send("update-done",arg,val)
 }
 
 ipcRenderer.on('update-value',(event, arg) => {
