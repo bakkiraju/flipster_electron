@@ -1,0 +1,13 @@
+{
+  "name": "electron_UI",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.4.13",
+    "electron-rebuild": "^1.5.6"
+  }
+}

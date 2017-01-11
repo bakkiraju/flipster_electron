@@ -26,9 +26,10 @@ app.on('ready', function() {
        height : 300,
        show   : false,
        frame  : false,
-       backgroundColor: '#ababab',
-       focusable: false
+       backgroundColor: '#ababab'
    })
+
+   var prefBounds;
 
    prefsWindow.loadURL('file://'+__dirname + '/prefs.html')
 
@@ -39,11 +40,18 @@ app.on('ready', function() {
    globalShortcut.register('Esc', function () {
      console.log("Pref toggle hit");
       if (prefsWindow.isVisible()) {
-        prefsWindow.hide()
-        console.log("closing cnx to port 5556")
-        requester.close()
+        prefsWindow.setSize(0,0,true);
+        prefsWindow.hide();
       } else {
-        prefsWindow.show()
+        if (prefBounds) {
+          console.log("Pref win bounds",prefBounds);
+          prefsWindow.setSize(prefBounds.width,prefBounds.height,true)
+          prefsWindow.show();
+        } else {
+          prefsWindow.show();
+          prefBounds = prefsWindow.getBounds();
+          console.log("Registered Pref bounds",prefBounds);
+        }
         console.log("connecting to port 5556")
         requester.connect("tcp://localhost:5556")
       }
@@ -62,15 +70,14 @@ app.on('ready', function() {
 
    prefsWindow.on('focus', function(){
      console.log("pref window showed up")
-   })
+   });
 
    prefsWindow.on('blur',function(){
      console.log("pref window hidden")
      globalShortcut.unregister("Up")
      globalShortcut.unregister("Down")
-   })
-
-
+     console.log("Unregisterd key bindings")
+   });
 
    ipcMain.on("update-done", function(event,arg1,arg2){
 
