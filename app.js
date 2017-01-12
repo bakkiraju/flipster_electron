@@ -5,7 +5,10 @@ const MenuItem = electron.MenuItem
 const ipcMain = electron.ipcMain
 const app = electron.app
 const globalShortcut = electron.globalShortcut
+
+const fs = require('fs')
 const zmq = require('zeromq')
+
 
 var responder = zmq.socket('rep')  // server for  connecting to external messages
 var requester = zmq.socket('req')  // client that connects to external server
@@ -28,6 +31,15 @@ app.on('ready', function() {
        frame  : false,
        backgroundColor: '#ababab'
    })
+
+   var circularPrefsWindow = new BrowserWindow({
+       transparent:true,
+       frame  : false
+   })
+
+   circularPrefsWindow.loadURL('file://'+__dirname + '/circularPrefs.html')
+
+   circularPrefsWindow.show()
 
    var prefBounds;
 
@@ -57,30 +69,27 @@ app.on('ready', function() {
       }
    });
 
-
-  globalShortcut.register('Up', function () {
-      console.log("Pressed Up");
-      prefsWindow.webContents.send("update-value","Up")
-  })
-
-  globalShortcut.register('Down', function () {
-       console.log("Pressed Down");
-          prefsWindow.webContents.send("update-value","Down")
-   })
-
-   prefsWindow.on('focus', function(){
+  prefsWindow.on('focus', function(){
      console.log("pref window showed up")
-   });
+     globalShortcut.register('Up', function () {
+         console.log("Pressed Up");
+         prefsWindow.webContents.send("update-value","Up")
+     });
 
-   prefsWindow.on('blur',function(){
+     globalShortcut.register('Down', function () {
+          console.log("Pressed Down");
+             prefsWindow.webContents.send("update-value","Down")
+     });
+  });
+
+  prefsWindow.on('blur',function(){
      console.log("pref window hidden")
      globalShortcut.unregister("Up")
      globalShortcut.unregister("Down")
      console.log("Unregisterd key bindings")
    });
 
-   ipcMain.on("update-done", function(event,arg1,arg2){
-
+  ipcMain.on("update-done", function(event,arg1,arg2){
        console.log(arg1,arg2)
 
        if (arg1 == "Up" || arg1 == "Down") {

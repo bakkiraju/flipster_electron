@@ -5,7 +5,11 @@ const MenuItem = electron.MenuItem
 const ipcMain = electron.ipcMain
 const app = electron.app
 const globalShortcut = electron.globalShortcut
+
+const fs = require('fs')
+
 const zmq = require('zeromq')
+
 
 var responder = zmq.socket('rep')  // server for  connecting to external messages
 var requester = zmq.socket('req')  // client that connects to external server
@@ -26,9 +30,10 @@ app.on('ready', function() {
        height : 300,
        show   : false,
        frame  : false,
-       backgroundColor: '#ababab',
-       focusable: false
+       backgroundColor: '#ababab'
    })
+
+   var prefBounds;
 
    prefsWindow.loadURL('file://'+__dirname + '/prefs.html')
 
@@ -39,39 +44,44 @@ app.on('ready', function() {
    globalShortcut.register('Esc', function () {
      console.log("Pref toggle hit");
       if (prefsWindow.isVisible()) {
-        prefsWindow.hide()
-        console.log("closing cnx to port 5556")
+        prefsWindow.setSize(0,0,true);
+        prefsWindow.hide();
       } else {
-        prefsWindow.show()
+        if (prefBounds) {
+          console.log("Pref win bounds",prefBounds);
+          prefsWindow.setSize(prefBounds.width,prefBounds.height,true)
+          prefsWindow.show();
+        } else {
+          prefsWindow.show();
+          prefBounds = prefsWindow.getBounds();
+          console.log("Registered Pref bounds",prefBounds);
+        }
         console.log("connecting to port 5556")
         requester.connect("tcp://localhost:5556")
       }
    });
 
-
-  globalShortcut.register('Up', function () {
-      console.log("Pressed Up");
-      prefsWindow.webContents.send("update-value","Up")
-  })
-
-  globalShortcut.register('Down', function () {
-       console.log("Pressed Down");
-          prefsWindow.webContents.send("update-value","Down")
-   })
-
-   prefsWindow.on('focus', function(){
+  prefsWindow.on('focus', function(){
      console.log("pref window showed up")
-   })
+     globalShortcut.register('Up', function () {
+         console.log("Pressed Up");
+         prefsWindow.webContents.send("update-value","Up")
+     });
 
-   prefsWindow.on('blur',function(){
+     globalShortcut.register('Down', function () {
+          console.log("Pressed Down");
+             prefsWindow.webContents.send("update-value","Down")
+     });
+  });
+
+  prefsWindow.on('blur',function(){
      console.log("pref window hidden")
      globalShortcut.unregister("Up")
      globalShortcut.unregister("Down")
-   })
+     console.log("Unregisterd key bindings")
+   });
 
-
-   ipcMain.on("update-done", function(event,arg1,arg2){
-
+  ipcMain.on("update-done", function(event,arg1,arg2){
        console.log(arg1,arg2)
 
        if (arg1 == "Up" || arg1 == "Down") {
