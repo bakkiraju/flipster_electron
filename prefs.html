@@ -2,21 +2,11 @@
 <head>
     <title>Photon</title>
     <link rel="stylesheet" href="css/photon.min.css">
-    <script src="./prefs.js"> </script>
-    <style>
-    div
-    {
-    /*border-radius: 50%;*/
-    width: 50%;
-    height: auto;
-    padding-top: 50%;
-    background: #ef8913;
-    }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>window.$ = window.jQuery = require('./jquery-3.1.1.min.js');</script>
   </head>
  <body style="-webkit-app-region: drag">
-   <div class="tab-group" style="height: 100px;">
+   <div id="scaffold"></div>
+   <!-- <div class="tab-group" style="height: 100px;">
      <div class="tab-item active" onclick="showTabContent(this)">
        <div class="icon icon-star" style="font-size: 50px;padding-top: 20px"></div>
      </div>
@@ -29,13 +19,10 @@
    </div>
    <div id="active_tab_content" style="font-size: 50px;padding-top: 40px;vertical-align:middle;
       text-align:center;"> 10
-   </div>
-
+   </div> -->
    <script>
-   $(document).ready(function()
-   {
-     $("div").css("border-radius", "50%");
-   });
+      require('babel-register');
+      require('./js/prefs.js');
    </script>
  </body>
 </html>
