@@ -168,7 +168,8 @@ ipcRenderer.on('update-scaffold', (event, arg) => {
 
 ipcRenderer.on('trava-tap', (event, args)=> {
    console.log("trava-tap", args);
-   
+   var flipper = $("#scaffold").flipster('init');
+   flipper.flipster('next');
 })
 
 ipcRenderer.on('update-overlay-value', (event, args)=> {

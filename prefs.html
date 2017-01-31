@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="css/jquery.flipster.min.css">
   </head>
  <body class="multiscreenapp">
+
    <div id="scaffold" class="flipster">
+
      <ul class="flip-items">
+
        <li>
          <div class="singlescreen">
            <div class="tab-item">
@@ -24,7 +27,7 @@
            <div class="tab-item">
              <div class="icon icon-brush" style="font-size: 50px;padding-top: 20px"></div>
            </div>
-           <div id="val" style="font-size: 50px; text-align:center;">10</div>
+           <div id="val" style="font-size: 50px; text-align:center;">15</div>
            <div style="font-size: 25px; text-align:center;">Brush option</div>
          </div>
        </li>
@@ -34,33 +37,49 @@
            <div class="tab-item">
              <div class="icon icon-light-up" style="font-size: 50px;padding-top: 20px"></div>
            </div>
-           <div id="val" style="font-size: 50px; text-align:center;">10</div>
-           <div style="font-size: 25px; text-align:center;">Brightness option</div>
+           <div id="val" style="font-size: 50px; text-align:center;">20</div>
+           <div style="font-size: 25px; text-align:center;">Brightness</div>
          </div>
        </li>
+
+       <li>
+         <div class="singlescreen">
+           <div class="tab-item">
+             <div class="icon icon-bookmark" style="font-size: 50px;padding-top: 20px"></div>
+           </div>
+           <div id="val" style="font-size: 50px; text-align:center;">5</div>
+           <div style="font-size: 25px; text-align:center;">Bookmark</div>
+         </div>
+       </li>
+
     </ul>
   </div>
-  
+
    <script>window.$ = window.jQuery = require('./jquery-3.1.1.min.js');</script>
    <script src="./jquery.flipster.min.js"></script>
 
    <script>
    require('babel-register');
 
-   var flipContainer = $('.flipster'),
-       flipItemContainer = flipContainer.find('.flip-items'),
-       flipItem = flipContainer.find('li');
+  //  var flipContainer = $('.flipster'),
+  //      flipItemContainer = flipContainer.find('.flip-items'),
+  //      flipItem = flipContainer.find('li');
+   $("body").removeClass();
 
-   $(".flipster").flipster({
+   $("body").attr('class','multiscreenapp');
+
+   $("#scaffold").flipster({
     style: 'carousel',
-    itemContainer: flipItemContainer,
-    itemSelector: flipItem,
+    // itemContainer: flipItemContainer,
+    // itemSelector: flipItem,
     spacing: -2.0, loop:true,keyboard:true
   });
 
-  var myFlipster = $('.flipster').flipster(); // It's best to store the element as a variable for easy reference.
+$("#scaffold").flipster('init');
 
- myFlipster.flipster('next');
+  // var myFlipster = $('.flipster').flipster(); // It's best to store the element as a variable for easy reference.
+
+ // myFlipster.flipster('next');
   require('./js/prefs.js');
 
    </script>
