@@ -1,66 +1,10 @@
 <html>
 <head>
     <title>Circular</title>
-    <style>
-      div.circle
-      {
-          width: 100%;
-          height: auto;
-          padding-top: 100%;
-          background: #ababab;
-      }
-    </style>
-    <!-- <link rel="stylesheet" href="css/photon.min.css"> -->
-    <script>window.$ = window.jQuery = require('./jquery-3.1.1.min.js');</script>
+    <link rel="stylesheet" href="css/prefs.css">
+    <!-- <script>window.$ = window.jQuery = require('./jquery-3.1.1.min.js');</script> -->
   </head>
- <body style="-webkit-app-region: drag">
-    <div class="circle tab-group" id="main">
-
-    </div>
-   <script>
-      $(document).ready(function()
-      {
-        $("div.circle").css("border-radius", "100%");
-      });
-
-      var radius = 20
-      var theta = [0, Math.PI / 6, Math.PI / 4, Math.PI / 3, Math.PI / 2, 2 * (Math.PI / 3), 3 * (Math.PI / 4), 5 * (Math.PI / 6), Math.PI,
-        7 * (Math.PI / 6), 5 * (Math.PI / 4), 4 * (Math.PI / 3), 3 * (Math.PI / 2), 5 * (Math.PI / 3),
-        7 * (Math.PI / 4), 11 * (Math.PI / 6)];
-      var circle = document.createElement('div');
-      //circle.className = 'tab-item';
-      circle.posx = Math.round(radius * (Math.cos(theta[7]))) + 'px';
-      circle.posy = Math.round(radius * (Math.sin(theta[7]))) + 'px';
-      circle.style.position = "absolute";
-
-      var icon = document.createElement('div');
-      icon.style.position = "absolute";
-      icon.style.backgroundColor = 'red';
-      circle.appendChild(icon);
-
-      main.appendChild(circle);
-
-  //     var setup = function () {
-  //     var radius = 10;
-  //     var main = document.getElementById('main');
-  //     var mainHeight = parseInt(window.getComputedStyle(main).height.slice(0, -2));
-  //     var theta = [0, Math.PI / 6, Math.PI / 4, Math.PI / 3, Math.PI / 2, 2 * (Math.PI / 3), 3 * (Math.PI / 4), 5 * (Math.PI / 6), Math.PI, 7 * (Math.PI / 6), 5 * (Math.PI / 4), 4 * (Math.PI / 3), 3 * (Math.PI / 2), 5 * (Math.PI / 3), 7 * (Math.PI / 4), 11 * (Math.PI / 6)];
-  //     var circleArray = [];
-  //     var colors = ['red', 'green', 'purple', 'black', 'orange', 'yellow', 'maroon', 'grey', 'lightblue', 'tomato', 'pink', 'maroon', 'cyan', 'magenta', 'blue', 'chocolate', 'DarkSlateBlue'];
-  //     for (var i = 0; i < 16; i++) {
-  //         var circle = document.createElement('div');
-  //         circle.className = 'circle number'+i;
-  //         circleArray.push(circle);
-  //         circleArray[i].posx = Math.round(radius * (Math.cos(theta[i]))) + 'px';
-  //         circleArray[i].posy = Math.round(radius * (Math.sin(theta[i]))) + 'px';
-  //         circleArray[i].style.position = "absolute";
-  //         circleArray[i].style.backgroundColor = colors[i];
-  //         circleArray[i].style.top = ((mainHeight / 2) - parseInt(circleArray[i].posy.slice(0, -2))) + 'px';
-  //         circleArray[i].style.left = ((mainHeight/ 2 ) + parseInt(circleArray[i].posx.slice(0, -2))) + 'px';
-  //         main.appendChild(circleArray[i]);
-  //     }
-  // };
-  // setup();
-   </script>
- </body>
+ <body>
+    <div class="circle"></div>
+</body>
 </html>
