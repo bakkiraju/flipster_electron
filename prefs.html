@@ -1,12 +1,13 @@
 <html>
 <head>
     <title>Photon</title>
-    <link rel="stylesheet" href="css/photon.min.css">
+    <!-- <link rel="stylesheet" href="css/photon.min.css"> -->
+    <link rel="stylesheet" href="css/jquery.flipster.min.css">
     <link rel="stylesheet" href="css/prefs.css">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-    <link rel="stylesheet" href="css/jquery.flipster.min.css">
-  </head>
- <body class="multiscreenapp">
+</head>
+
+<body class="multiscreenapp">
 
    <div id="scaffold" class="flipster">
 
@@ -64,24 +65,28 @@
   //  var flipContainer = $('.flipster'),
   //      flipItemContainer = flipContainer.find('.flip-items'),
   //      flipItem = flipContainer.find('li');
-   $("body").removeClass();
-
-   $("body").attr('class','multiscreenapp');
 
    $("#scaffold").flipster({
-    style: 'carousel',
+    style: 'flat',
     // itemContainer: flipItemContainer,
     // itemSelector: flipItem,
-    spacing: -2.0, loop:true,keyboard:true
+    spacing: -2.0,
+    loop:true,
+    keyboard:true
   });
 
-$("#scaffold").flipster('init');
+
+// $("#scaffold").flipster('init');
 
   // var myFlipster = $('.flipster').flipster(); // It's best to store the element as a variable for easy reference.
 
  // myFlipster.flipster('next');
-  require('./js/prefs.js');
+  // require('./js/prefs.js');
 
    </script>
+
+   <script>window.$ = window.jQuery = require('./js/jquery.min.js');</script>
+   <script src="./js/jquery.flipster.min.js"></script>
+   <!-- <script src="./js/prefs.js"></script> -->
  </body>
 </html>

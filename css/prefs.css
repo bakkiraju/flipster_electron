@@ -1,55 +1,16 @@
-/*div.circleBase {
-    border-radius: 100%;
-    background: rgba(171, 171, 171,0.7);
-}*/
-
-
-@keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-}
-
-.app1 {
-    animation: fadeout linear 0.5s;
-}
-
-.app {
-       -webkit-user-select: none;
-       -webkit-app-region: drag;
-       /* Cover the whole window */
-       height: 100%;
-       background: rgba(171, 171, 171,0.7);
-}
-
 .multiscreenapp {
        -webkit-user-select: none;
        -webkit-app-region: drag;
        /* Cover the whole window */
-       height: 100%;
-       background: rgba(255, 255, 255,0);
-}
-
-div.circle
-{
-    width: 100%;
-    height: auto;
-    padding-top: 100%;
-    background: rgba(171,171,171,0.7);
-    border-radius: 100%;
-
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
+       /*height: 100%;*/
+       background: rgba(171, 171, 171,0);
 }
 
 div.singlescreen
 {
     width: 200px;
     height: 200px;
-    background: rgba(171,171,171,1);
+    /*background: rgba(171,171,171,0.5);*/
 }
 
 #ValueContainer
